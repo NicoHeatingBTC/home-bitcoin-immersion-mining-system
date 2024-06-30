@@ -58,9 +58,11 @@ Remember, **the goal is not "profit" in fiat terms, the goal is to get sats for 
 
 There are multiple forms of heat exchangers, but for this type of installation, brazed plate heat exchangers are the ideal type.
 
+![test](photos/plumbingoverview.png)
 
-
-Heat exchanger sizing is quite difficult, it is possible to do all of the math involved, but the general rule is bigger = better.  Source HBIM channel
+Heat exchanger sizing is quite difficult, it is possible to do all of the math involved, but the general rule is bigger = better.
+Source HBIM channel: https://www.youtube.com/channel/UC9dv60_ORGjNpdHYQ2GDR2Q
+Aside: Bob from this channel is a Godsend.  He has so much knowledge and this project would not have been possible without him.  I was constantly referencing his videos!  Thank you Bob!!
 
 
 ## Design Considerations 
@@ -118,5 +120,3 @@ Most of the cost was the miners themselves and the Fog Hashing kit.  Could you p
 ## Conclusion
 
 You are correct.  If I had used the dollar amount of this project to buy bitcoin, I would be head and up in bitcoin terms.  I would have had more bitcoin simply buying it.  I knew that going into this and that wasn't the point.  The point was to monentize waste, to learn all of these new skills, to further decentralize the network, to stick it to the commercial grade miners, and to write up a cool post about it.  The skills I learned doing this project are worth more to me than the bitcoin I could have bought.  I now have the ability to do many other projects around the house without having to call contractors.  I am able to save by working for myself.  
-
-home-bitcoin-immersion-mining-system test
