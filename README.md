@@ -37,9 +37,9 @@ There exists a direct conversion of Watts to BTUs:
 
     1 Watt = 3.41 BTU/h
 
-So with this number in mind, I began to look at machines on the market and what power they output.  I ended up with two S19k Pros for their increased effecincy and constraints within my budget.  
+So with this number in mind, I began to look at machines on the market and what power they output.  I ended up with two S19k Pros for their increased efficiency and constraints within my budget.  
 
-When running in standard mode, one machine will consume ~2760W from the wall, which is ~9,411 BTU/h of heat; and when running overclocked, one machine pulls ~3600W, which is ~12,276 BTU/h oh heat.  Because of thermodynamics, all energy consumed by the processor will eventually be dissapated as heat.  
+When running in standard mode, one machine will consume ~2760W from the wall, which is ~9,411 BTU/h of heat; and when running overclocked, one machine pulls ~3600W, which is ~12,276 BTU/h of heat.  Because of thermodynamics, all energy consumed by the processor will eventually be dissipated as heat.  
 
 So since I now knew I had a range of ~18,000 - 24,000 BTUs of heat, is this enough to heat a home?  Turns out, yes.
 
@@ -47,9 +47,9 @@ As shown by these graphs, even though the boiler can produce a much higher outpu
 
 ### Fiat Costs
 
-The oil plan I used to have was an anuall usage, divided by 12, and then paid monthly.  So in winter, when more deliveries would come in, I would pay the same as I would in the summer, when I would get maybe 1 a season.  So the negative cost I needed to match or beat was ~$380 per month.  I felt that even if I was "losing" a net of $380 per month, then this project would still be worth it, as I am now at least stacking sats and learning by doing.  
+The oil plan I used to have was an annual usage, divided by 12, and then paid monthly.  So in winter, when more deliveries would come in, I would pay the same as I would in the summer, when I would get maybe 1 a season.  So the negative cost I needed to match or beat was ~$380 per month.  I felt that even if I was "losing" a net of $380 per month, then this project would still be worth it, as I am now at least stacking sats and learning by doing.  
 
-Mining at home will be entirely dependant on your electricity rates.  These rates consist of a generation charge and a distribution charge.  Most commonly refer to this in the combined form as "Cost per Killawatt Hour" or c/kWh.  My distribution charge of 0.08386c/kWh was fixed, nothing I could do to lower it.  However, I was able to find a way to bring my generation charge down to 0.07c/kWh.  So my current electricity rate is $0.154c/kWh.  If you are familiar with the mining scene, this is quite high.  But recapturing the heat is an incredibly efficient action.  What was waste is now useful, while getting Sats.  It's paying once, and recieving two uses for the same watt.  This efficiency boost allows home mining opperations to be competitive with commercial.  Heating is a sunk cost for a home, and now it is possible to monentize it.  
+Mining at home will be entirely dependant on your electricity rates.  These rates consist of a generation charge and a distribution charge.  Most commonly refer to this in the combined form as "Cost per Killawatt Hour" or c/kWh.  My distribution charge of 0.08386c/kWh was fixed, nothing I could do to lower it.  However, I was able to find a way to bring my generation charge down to 0.07c/kWh.  So my current electricity rate is $0.154c/kWh.  If you are familiar with the mining scene, this is quite high.  But recapturing the heat is an incredibly efficient action.  What was waste is now useful, while getting Sats.  It's paying once, and receiving two uses for the same watt.  This efficiency boost allows home mining operations to be competitive with commercial.  Heating is a sunk cost for a home, and now it is possible to monetize it.  
 
 Remember, **the goal is not "profit" in fiat terms, the goal is to get sats for a bill you are paying anyways.**
 
@@ -72,7 +72,7 @@ Aside: Bob from this channel is a Godsend.  He has so much knowledge and this pr
 * Are you only trying to heat living space?  Or also tap water?
 * How insulated is your home?
 * Do you have any existing infrastructure you are working around, or are you starting from scratch?
-* Is your electrical pannel big enough?
+* Is your electrical panel big enough?
 
 ## The System
 
@@ -89,11 +89,11 @@ For the indoor radiator system, I had to integrate this new heat source to work 
 
 ![Overview of Plumbing](photos/plumbingoverview.png)
 
-There are also safety system in place for the miners.  
+There are also safety systems in place for the miners.  
 
 For example, if the miners are circulating heat through the house and the boiler circulator pump also turns on, the mining system will automatically exhaust, as to not put the heat from the boiler into the immersion system and heating up the machines.   
 
-For the exhaust side, this is its own seperate hydronic system.  Instead of only water, it is filled with a glycol/water mixture, so that it will not freeze in the winter.  This system has its own circulating pump which goes to the Fog Hashing radiator outside.  This radiator has its own power and temperature sensors, and it is able to control the speed of the fans to match what is needed for the heat input.  To make this system easier for myself, I utilized PEX-A piping, which was nice to not need to solder copper pipes.  One of the other safety systems is a temperature controller on the final output of the oil line.  If this ever becomes too hot, the system will turn on the exhaust if it is off.  
+For the exhaust side, this is its own separate hydronic system.  Instead of only water, it is filled with a glycol/water mixture, so that it will not freeze in the winter.  This system has its own circulating pump which goes to the Fog Hashing radiator outside.  This radiator has its own power and temperature sensors, and it is able to control the speed of the fans to match what is needed for the heat input.  To make this system easier for myself, I utilized PEX-A piping, which was nice to not need to solder copper pipes.  One of the other safety systems is a temperature controller on the final output of the oil line.  If this ever becomes too hot, the system will turn on the exhaust if it is off.  
 
 ## Electrical
 
@@ -111,6 +111,24 @@ To control the 240v to each miner, I used 10/2 romex cable and put each miner on
 
 To control the pumps, I utilized a standard Taco switching relay for hydronic systems.  The low voltage control box contains all logic with no micro controllers.  There is a standard analog thermostat in the middle of the house which controls the circulation pump on the bitcoin miner side.  If this pump is on, then the exhaust pump is off, since I want to keep all the heat inside.  However, if the oil becomes too hot, both pumps will turn on, protecting the miners.  If the thermostat is off, then only the exhaust pump is on, and the heat is directed outside.
 
+## Priorities and Logic Control
+
+This system uses no software or programming and is fully managed by relays and switches.  Mostly temperature and current relays.  If I were to write it in pseudocode, would be as follows here:
+
+    if hot_water_needed:
+      shut off internal + exhaust circulation pumps
+      # this is to direct the heat to the hot water demand
+    else:
+      if inside_temp <= thermostat_temp:
+        keep heat inside via radiators
+      else
+        exhaust heat outside
+    
+    if return_oil_temp > dangerous_level:
+      turn on exhaust pump
+      # this overrides all of the above
+
+
 ### (Electrical Cont) Home Assistant
 
 To monitor the temperatures of everything, I made a 12 input temperature sensor with an ESP8266 running ESPHome.  The ESP has 12 DS18B20 Temperature probes connected to it, with one probe being on every input and output (yes I know some are shared).  This data is pumped into Home Assistant and I can view and graph live temperature data.  
@@ -119,7 +137,9 @@ To monitor the temperatures of everything, I made a 12 input temperature sensor 
 
 ### Home Assistant + Braiins OS
 
-Installing Braiins OS has made this system more tunable and efficient.  This current screenshot below shows the monitoring and control provided by Braiins and the home assistant integration.  I currently use this to overclock the miners to run at maximum power when I need to use the hot water, this is usually for showering.  When the miners are underclocked in the efficiency mode, water is still plenty warm but less warm than the boiler.  This is currently my setup for summer, where I do not need the heat.  In the winter, they stay overclocked. 
+Installing [Braiins OS](https://academy.braiins.com/en/braiins-os/about/) has made this system more tunable and efficient.  This current screenshot below shows the monitoring and control provided by Braiins and the home assistant integration.  I currently use this to overclock the miners to run at maximum power when I need to use the hot water, this is usually for showering.  When the miners are underclocked in the efficiency mode, water is still plenty warm but less warm than the boiler.  This is currently my setup for summer, where I do not need the heat.  In the winter, they stay overclocked. 
+
+[Home Assistant Integration](https://github.com/Schnitzel/hass-miner)
 
 ![Home Assistant Tweaks](photos/HAandBraiins.jpg)
 
@@ -155,3 +175,42 @@ You are correct.  If I had used the dollar amount of this project to buy bitcoin
 ![Photos](photos/20240304_231233.jpg)
 ![Photos](photos/20240304_231238.jpg)
 ![Photos](photos/20240304_231243.jpg)
+ 
+
+## FAQs
+
+* How cold does it get where you are?
+  > I am in the north east of the USA.  The coldest it gets during the winter is single digits at the worst.  Most times around 20s.  
+
+* Do you have good insulation?
+  > Nope!  This house has none.  The rooms I have renovated have a bit but the rest of the house has nothing.
+
+* What kind of ambient temperatures are you getting in any given room with a radiator?
+  > Since the heat is essentially free/very cheap, I leave the heat up higher than normal, maybe around 73 on the first floor.  I have to exhaust the heat at night to sleep since it gets as hot as 75-80 degrees upstairs.
+
+* Are you getting enough sats to reduce your electricity bill and if so by how much e.g. 5%, 50%?
+  
+
+  > :triangular_flag_on_post:*This answer is PRE-HALVING* :triangular_flag_on_post:
+  The sats stacked fluctuate around break even or +/- 10% profit loss.  But remember from the post, as long as I am losing the equivalent or less dollars than the old oil bill, it is "positive" to me.  If it's break even, then its free heat.  If its less then its really cheap heat.  And if its positive then I am being paid to heat and shower
+
+  > *POST-HALVING* The system has definitely taken a profitability hit after the halving.  Though I still run it because I need the heat and I would be paying for it anyways.  But yes, it is half as cost effective now.
+
+
+## Mentions
+
+### Original Post to Stacker News: https://stacker.news/items/480613
+
+## External Mentions:
+
+https://foghashing.io/blogs/news/heathome
+
+https://www.reddit.com/r/BitcoinMining/comments/1bo8rpn/heating_my_100year_old_home_with_immersion/
+https://twitter.com/stacker_news/status/1772459697536147646
+
+https://www.linkedin.com/posts/willlone_i-heat-my-100-yr-old-home-with-immersion-activity-7190933692997931009-QT5q/
+
+https://medium.com/@FogHashing/i-heat-my-100-yr-old-home-with-immersion-bitcoin-mining-761389fa1162
+
+
+Want to get in touch?  Contact me!
