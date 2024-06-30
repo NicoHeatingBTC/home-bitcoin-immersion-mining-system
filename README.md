@@ -97,7 +97,7 @@ For the exhaust side, this is its own seperate hydronic system.  Instead of only
 
 ## Electrical
 
-![Overview of Electrical](photos\elecoverview.png)
+![Overview of Electrical](photos/elecoverview.png)
 
 The electrical side of this project has three parts.
 
@@ -115,19 +115,19 @@ To control the pumps, I utilized a standard Taco switching relay for hydronic sy
 
 To monitor the temperatures of everything, I made a 12 input temperature sensor with an ESP8266 running ESPHome.  The ESP has 12 DS18B20 Temperature probes connected to it, with one probe being on every input and output (yes I know some are shared).  This data is pumped into Home Assistant and I can view and graph live temperature data.  
 
-![Home Assistant](photos\HA.png)
+![Home Assistant](photos/HA.png)
 
 ### Home Assistant + Braiins OS
 
 Installing Braiins OS has made this system more tunable and efficient.  This current screenshot below shows the monitoring and control provided by Braiins and the home assistant integration.  I currently use this to overclock the miners to run at maximum power when I need to use the hot water, this is usually for showering.  When the miners are underclocked in the efficiency mode, water is still plenty warm but less warm than the boiler.  This is currently my setup for summer, where I do not need the heat.  In the winter, they stay overclocked. 
 
-![Home Assistant Tweaks](photos\HAandBraiins.jpg)
+![Home Assistant Tweaks](photos/HAandBraiins.jpg)
 
 ## What I spent
 
 This project was quite expensive, but I was able to save so much by doing all of the labor myself.  No, I did not have any experience with plumbing, soldering copper pipes, or maintaining my hydronic system before this project.  I was familiar with mains electrical systems and have added outlets and switches in places, but thats about it.  My point is that anyone with an internet connection can learn and do anything.  Leverage it as the tool none of your ancestors had.
 
-![Graph of breakdown](photos\CostBreakdown.png)
+![Graph of breakdown](photos/CostBreakdown.png)
 
 Most of the cost was the miners themselves and the Fog Hashing kit.  Could you probably make a cheaper tank and find a cheaper radiator?  Maybe, but good luck.  You will put a lot of time into it and this kit was able to be perfectly adapted to this, even though this is not what it was made for.  The rest of the cost was plumbing.  This included all tools, fittings, pipes, pastes, etc.  **I have never soldered a copper pipe before this project, if I can do it, you can too.**
 
@@ -137,21 +137,21 @@ You are correct.  If I had used the dollar amount of this project to buy bitcoin
 
 ## Photos!
 
-![Photos](photos\20240210_014859.jpg)
-![Photos](photos\20240210_014912.jpg)
-![Photos](photos\20240211_154733.jpg)
-![Photos](photos\20240211_154736.jpg)
-![Photos](photos\20240225_005706.jpg)
-![Photos](photos\20240225_150859.jpg)
-![Photos](photos\20240225_151509.jpg)
-![Photos](photos\20240225_154823.jpg)
-![Photos](photos\20240225_154830.jpg)
-![Photos](photos\20240225_154833.jpg)
-![Photos](photos\20240225_154838.jpg)
-![Photos](photos\20240304_231215.jpg)
-![Photos](photos\20240304_231221.jpg)
-![Photos](photos\20240304_231227.jpg)
-![Photos](photos\20240304_231229.jpg)
-![Photos](photos\20240304_231233.jpg)
-![Photos](photos\20240304_231238.jpg)
-![Photos](photos\20240304_231243.jpg)
+![Photos](photos/20240210_014859.jpg)
+![Photos](photos/20240210_014912.jpg)
+![Photos](photos/20240211_154733.jpg)
+![Photos](photos/20240211_154736.jpg)
+![Photos](photos/20240225_005706.jpg)
+![Photos](photos/20240225_150859.jpg)
+![Photos](photos/20240225_151509.jpg)
+![Photos](photos/20240225_154823.jpg)
+![Photos](photos/20240225_154830.jpg)
+![Photos](photos/20240225_154833.jpg)
+![Photos](photos/20240225_154838.jpg)
+![Photos](photos/20240304_231215.jpg)
+![Photos](photos/20240304_231221.jpg)
+![Photos](photos/20240304_231227.jpg)
+![Photos](photos/20240304_231229.jpg)
+![Photos](photos/20240304_231233.jpg)
+![Photos](photos/20240304_231238.jpg)
+![Photos](photos/20240304_231243.jpg)
