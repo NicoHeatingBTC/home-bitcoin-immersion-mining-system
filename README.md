@@ -31,7 +31,7 @@ Common heat sources include:
 ## The Calculations
 
 ### Heat 
-The existing oil boiler can produce about 125,000 BTU/h of heat.  This was my rough ballpark number.  However, this current system runs intermittently.  So it would run for about 15 minutes, stop for 30, and repeat.  While this works fine, the temperature swings 5-8 degrees between heating cycles.  
+The existing oil boiler can produce about 125,000 BTU/h of heat.  This was my rough ballpark number.  However, this current system runs intermittently.  So it would run for about 15 minutes, stop for 30, and repeat.  While this works fine, the temperature swings 5-8 degree (F) between heating cycles.  
 
 There exists a direct conversion of Watts to BTUs: 
 
@@ -58,9 +58,8 @@ Remember, **the goal is not "profit" in fiat terms, the goal is to get sats for 
 
 There are multiple forms of heat exchangers, but for this type of installation, brazed plate heat exchangers are the ideal type.
 
-![test](photos/plumbingoverview.png)
-
 Heat exchanger sizing is quite difficult, it is possible to do all of the math involved, but the general rule is bigger = better.
+
 Source HBIM channel: https://www.youtube.com/channel/UC9dv60_ORGjNpdHYQ2GDR2Q
 Aside: Bob from this channel is a Godsend.  He has so much knowledge and this project would not have been possible without him.  I was constantly referencing his videos!  Thank you Bob!!
 
@@ -83,9 +82,14 @@ First stage, use the heat for the tap water (it is a great feeling to be washing
 
 For the first stage, I went all out and used a 100 plate heat exchanger.  I am sure the engineers in the comments are laughing at this, given its way oversized, but this was simply a part in my learning journey.  When heating, I am able to warm the tap water up from 55 degrees F, to 130 degrees F.  This water travels prewarmed into the boiler.  The result is the boiler is on for way less, or not at all for some heat loads.  Remember, the miners can only heat immersion fluid comfortably to around 60-70 degrees C.  I try not to push them that high, as they run less efficiently the higher the temperature is.
 
-For the second and third state, I used 40 plate heat exchangers.  This was from the reccommendations "here" and they seem to be sized just right.  
+For the second and third state, I used 40 plate heat exchangers.  This was from the recommendations on Bob's channel and they seem to be sized just right.  
+Source (https://youtu.be/GWlrezNqe4U?t=502)
 
-For the indoor radiator system, I had to integrate this new heat source to work in parrallel with my current boiler.  I wanted to be able to have either heat source, that way there is redundancy and the boiler can assist the miners if it is too cold outside.  Here is a diagram of how this looks simplified.  "Diagram" .  There are also safety system in place for the miners.  
+For the indoor radiator system, I had to integrate this new heat source to work in parallel with my current boiler.  I wanted to be able to have either heat source, that way there is redundancy and the boiler can assist the miners if it is too cold outside.  Here is a diagram of how this looks simplified.  
+
+![Overview of Plumbing](photos/plumbingoverview.png)
+
+There are also safety system in place for the miners.  
 
 For example, if the miners are circulating heat through the house and the boiler circulator pump also turns on, the mining system will automatically exhaust, as to not put the heat from the boiler into the immersion system and heating up the machines.   
 
@@ -93,30 +97,61 @@ For the exhaust side, this is its own seperate hydronic system.  Instead of only
 
 ## Electrical
 
+![Overview of Electrical](photos\elecoverview.png)
+
 The electrical side of this project has three parts.
 
 * High voltage AC (240v)
 * Low Voltage AC (24vac)
 * Low Voltage DC (24v)
 
-The low voltage side was simple.  A doorbell power supply is 24vac and perfect for this application.  I used 4 cable speaker wire to carry the 24vac to both control boxes.  Each control box has a 24vac side, and a full bridge rectefier to convert it to DC.  The DC components include fans, lights, thermometers, and USB buck converters.  
+The low voltage side was simple.  A doorbell power supply is 24vac and perfect for this application.  I used 4 cable speaker wire to carry the 24vac to both control boxes.  Each control box has a 24vac side, and a full bridge rectifier to convert it to DC.  The DC components include fans, lights, thermometers, and USB buck converters.  
 
-To control the 240v to each miner, I used 10/2 romex cable and put each miner on its own dedicated 30 Amp circuit breaker.  Each high voltage cable goes into its own 24vac 240v Air conditioning contactor.  Think of this as basically a very large relay.  The closing and opening of the contactor is controlled via the oil circulation pump in the fog hashing tank.  There is a current sensing relay that is closed if the pump is on and open if the pump is off.  When the oil pump turns on, the contactors close and high voltage power is supplied to the miners, turning them on.  There is a quirk with the fog hashing tank.  In the event of a power outage, when power is restored, the pump will not automatically turn on.  This is why I added the current sensing relay and the contactors.  Otherwise, the power would be restored and the miners would ciclically turn on, overheat, and turn off again.  
+To control the 240v to each miner, I used 10/2 romex cable and put each miner on its own dedicated 30 Amp circuit breaker.  Each high voltage cable goes into its own 24vac 240v Air conditioning contactor.  Think of this as basically a very large relay.  The closing and opening of the contactor is controlled via the oil circulation pump in the fog hashing tank.  There is a current sensing relay that is closed if the pump is on and open if the pump is off.  When the oil pump turns on, the contactors close and high voltage power is supplied to the miners, turning them on.  There is a quirk with the fog hashing tank.  In the event of a power outage, when power is restored, the pump will not automatically turn on.  This is why I added the current sensing relay and the contactors.  Otherwise, the power would be restored and the miners would cyclically turn on, overheat, and turn off again.  
 
 To control the pumps, I utilized a standard Taco switching relay for hydronic systems.  The low voltage control box contains all logic with no micro controllers.  There is a standard analog thermostat in the middle of the house which controls the circulation pump on the bitcoin miner side.  If this pump is on, then the exhaust pump is off, since I want to keep all the heat inside.  However, if the oil becomes too hot, both pumps will turn on, protecting the miners.  If the thermostat is off, then only the exhaust pump is on, and the heat is directed outside.
 
 ### (Electrical Cont) Home Assistant
 
-To monitor the temperatures of everything, I made a 12 input temperature sensor with an ESP8266 running ESPHome.  The ESP has 12 DS18B20 Temperature probes connected to it, with one probe being on every input and output (yes I know some are shared).  this data is pumped into Home Assistant and I can view and graph live temperature data.  put a screenshot
+To monitor the temperatures of everything, I made a 12 input temperature sensor with an ESP8266 running ESPHome.  The ESP has 12 DS18B20 Temperature probes connected to it, with one probe being on every input and output (yes I know some are shared).  This data is pumped into Home Assistant and I can view and graph live temperature data.  
+
+![Home Assistant](photos\HA.png)
+
+### Home Assistant + Braiins OS
+
+Installing Braiins OS has made this system more tunable and efficient.  This current screenshot below shows the monitoring and control provided by Braiins and the home assistant integration.  I currently use this to overclock the miners to run at maximum power when I need to use the hot water, this is usually for showering.  When the miners are underclocked in the efficiency mode, water is still plenty warm but less warm than the boiler.  This is currently my setup for summer, where I do not need the heat.  In the winter, they stay overclocked. 
+
+![Home Assistant Tweaks](photos\HAandBraiins.jpg)
 
 ## What I spent
 
 This project was quite expensive, but I was able to save so much by doing all of the labor myself.  No, I did not have any experience with plumbing, soldering copper pipes, or maintaining my hydronic system before this project.  I was familiar with mains electrical systems and have added outlets and switches in places, but thats about it.  My point is that anyone with an internet connection can learn and do anything.  Leverage it as the tool none of your ancestors had.
 
-Graph of breakdown
+![Graph of breakdown](photos\CostBreakdown.png)
 
-Most of the cost was the miners themselves and the Fog Hashing kit.  Could you probably make a cheaper tank and find a cheaper radiator?  Maybe, but good luck.  You will put a lot of time into it and this kit was able to be perfectly adapted to this, even though this is not what it was made for.  The rest of the cost was plumbing.  This included all tools, fittings, pipes, pastes, etc.  **I have never soldered a copper pipe before this project, if I can do it, you can too**
+Most of the cost was the miners themselves and the Fog Hashing kit.  Could you probably make a cheaper tank and find a cheaper radiator?  Maybe, but good luck.  You will put a lot of time into it and this kit was able to be perfectly adapted to this, even though this is not what it was made for.  The rest of the cost was plumbing.  This included all tools, fittings, pipes, pastes, etc.  **I have never soldered a copper pipe before this project, if I can do it, you can too.**
 
 ## Conclusion
 
-You are correct.  If I had used the dollar amount of this project to buy bitcoin, I would be head and up in bitcoin terms.  I would have had more bitcoin simply buying it.  I knew that going into this and that wasn't the point.  The point was to monentize waste, to learn all of these new skills, to further decentralize the network, to stick it to the commercial grade miners, and to write up a cool post about it.  The skills I learned doing this project are worth more to me than the bitcoin I could have bought.  I now have the ability to do many other projects around the house without having to call contractors.  I am able to save by working for myself.  
+You are correct.  If I had used the dollar amount of this project to buy bitcoin, I would be head and up in bitcoin terms.  I would have had more bitcoin simply buying it.  I knew that going into this and that wasn't the point.  The point was to monetize waste, to learn all of these new skills, to further decentralize the network, to stick it to the commercial grade miners, and to write up a cool post about it.  The skills I learned doing this project are worth more to me than the bitcoin I could have bought.  I now have the ability to do many other projects around the house without having to call contractors.  I am able to save by working for myself.  
+
+## Photos!
+
+![Photos](photos\20240210_014859.jpg)
+![Photos](photos\20240210_014912.jpg)
+![Photos](photos\20240211_154733.jpg)
+![Photos](photos\20240211_154736.jpg)
+![Photos](photos\20240225_005706.jpg)
+![Photos](photos\20240225_150859.jpg)
+![Photos](photos\20240225_151509.jpg)
+![Photos](photos\20240225_154823.jpg)
+![Photos](photos\20240225_154830.jpg)
+![Photos](photos\20240225_154833.jpg)
+![Photos](photos\20240225_154838.jpg)
+![Photos](photos\20240304_231215.jpg)
+![Photos](photos\20240304_231221.jpg)
+![Photos](photos\20240304_231227.jpg)
+![Photos](photos\20240304_231229.jpg)
+![Photos](photos\20240304_231233.jpg)
+![Photos](photos\20240304_231238.jpg)
+![Photos](photos\20240304_231243.jpg)
